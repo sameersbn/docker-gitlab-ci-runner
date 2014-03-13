@@ -13,12 +13,14 @@ RUN apt-get install -y vim curl wget sudo net-tools pwgen && \
 RUN apt-get install -y gcc make && apt-get clean
 
 # image specific
-RUN apt-get install -y unzip build-essential zlib1g-dev libyaml-dev libssl-dev libreadline-dev && \
+RUN apt-get install -y unzip build-essential checkinstall zlib1g-dev libyaml-dev libssl-dev \
+		libgdbm-dev libreadline-dev libncurses5-dev libffi-dev && \
 		apt-get clean
 
 RUN apt-get install -y python-software-properties && \
 		add-apt-repository -y ppa:git-core/ppa && apt-get update && \
-		apt-get install -y libxml2-dev libxslt-dev libcurl4-openssl-dev libicu-dev libpq-dev git-core postfix && \
+		apt-get install -y libxml2-dev libxslt-dev libcurl4-openssl-dev libicu-dev libmysqlclient-dev libpq-dev \
+		nginx git-core mysql-server redis-server python2.7 python-docutils postfix && \
 		apt-get clean
 
 RUN wget ftp://ftp.ruby-lang.org/pub/ruby/2.0/ruby-2.0.0-p353.tar.gz -O - | tar -zxf - -C /tmp/ && \

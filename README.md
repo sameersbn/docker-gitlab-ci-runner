@@ -22,7 +22,7 @@ Current Version: 4.0.0
 Pull the latest version of the image from the docker index. This is the recommended method of installation as it is easier to update image in the future. These builds are performed by the **Docker Trusted Build** service.
 
 ```
-docker pull sameersbn/gitlab-ci-runner
+docker pull sameersbn/gitlab-ci-runner:latest
 ```
 
 Starting from GitLab CI Runner version 4.0.0, You can pull a particular version of GitLab CI Runner by specifying the version number. For example,
@@ -46,13 +46,13 @@ Before the image can be started, the runner should be registered on the GitLab C
 
 ```
 docker run -name gitlab-ci-runner -i -t \
-  sameersbn/gitlab-ci-runner app:setup
+  sameersbn/gitlab-ci-runner:latest app:setup
 ```
 
 The command will prompt you to specify the location of the GitLab CI server and provide the registration token to access the server. After configuring the runner, the image can now be started.
 
 ```
-docker run -name gitlab-ci-runner -d sameersbn/gitlab-ci-runner
+docker run -name gitlab-ci-runner -d sameersbn/gitlab-ci-runner:latest
 ```
 
 You should now have GitLab CI Runner up and running. Please read [Data Store](#data-store) section for deployment in production environments.
@@ -70,7 +70,7 @@ Volumes can be mounted in docker by specifying the **'-v'** option in the docker
 mkdir /opt/gitlab-ci-runner/data
 docker run -name gitlab-ci-runner -d -h gitlab-ci-runner.local.host \
   -v /opt/gitlab-ci-runner/data:/home/gitlab_ci_runner/data \
-  sameersbn/gitlab-ci-runner
+  sameersbn/gitlab-ci-runner:latest
 ```
 
 # Maintenance
@@ -99,13 +99,13 @@ docker stop gitlab-ci-runner
 - **Step 2**: Update the docker image.
 
 ```
-docker pull sameersbn/gitlab-ci-runner
+docker pull sameersbn/gitlab-ci-runner:latest
 ```
 
 - **Step 4**: Start the image
 
 ```
-docker run -name gitlab-ci-runner -d [OPTIONS] sameersbn/gitlab-ci-runner
+docker run -name gitlab-ci-runner -d [OPTIONS] sameersbn/gitlab-ci-runner:latest
 ```
 
 

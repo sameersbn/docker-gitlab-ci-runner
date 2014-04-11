@@ -1,0 +1,70 @@
+#!/bin/bash
+
+set -e
+
+# generate a password for root.
+ROOT_PASSWORD=$(pwgen -c -n -1 12)
+echo "root:$ROOT_PASSWORD" | chpasswd
+echo User: root Password: $ROOT_PASSWORD
+
+# start supervisord
+/usr/bin/supervisord
+
+# take ownership of /home/git/data
+chown gitlab_ci_runner:gitlab_ci_runner /home/gitlab_ci_runner/data
+
+# create the .ssh directory
+sudo -u gitlab_ci_runner -H mkdir -p /home/gitlab_ci_runner/data/.ssh/
+touch /home/gitlab_ci_runner/data/.ssh/authorized_keys
+chmod 700 /home/gitlab_ci_runner/data/.ssh
+chmod 600 /home/gitlab_ci_runner/data/.ssh/authorized_keys
+chown -R gitlab_ci_runner:gitlab_ci_runner /home/gitlab_ci_runner/data/.ssh
+
+cd /home/gitlab_ci_runner/gitlab-ci-runner/
+
+appStart () {
+	echo "Starting gitlab-ci-runner..."
+
+	sudo -u gitlab_ci_runner -H ln -s /home/gitlab_ci_runner/data/config.yml config.yml
+	bundle exec ./bin/runner
+}
+
+appSetup () {
+	sudo -u gitlab_ci_runner -H bundle exec ./bin/setup
+	sudo -u gitlab_ci_runner -H mv config.yml /home/gitlab_ci_runner/data/config.yml
+}
+
+appHelp () {
+	echo "Available options:"
+	echo " app:start          - Starts the gitlab-ci server (default)"
+	echo " app:setup          - Setup the runner."
+	echo " app:help           - Displays the help"
+	echo " [command]          - Execute the specified linux command eg. bash."
+}
+
+case "$1" in
+	app:start)
+		appStart
+		;;
+	app:setup)
+		appSetup
+		;;
+	app:help)
+		appHelp
+		;;
+	*)
+		if [ -x $1 ]; then
+			$1
+		else
+			prog=$(which $1)
+			if [ -n "${prog}" ] ; then
+				shift 1
+				$prog $@
+			else
+				appHelp
+			fi
+		fi
+		;;
+esac
+
+exit 0

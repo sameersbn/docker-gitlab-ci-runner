@@ -1,0 +1,84 @@
+#!/bin/bash
+
+set -e
+
+GITLAB_CI_RUNNER_VERSION=4.0.0
+
+# add git user
+adduser --disabled-login --gecos 'GitLab CI Runner' gitlab_ci_runner
+
+sudo -u gitlab_ci_runner -H mkdir -p /home/gitlab_ci_runner/data/.ssh
+sudo -u gitlab_ci_runner -H ln -s /home/gitlab_ci_runner/data/.ssh /home/gitlab_ci_runner/.ssh
+
+# create the data store
+sudo -u gitlab_ci_runner -H mkdir -p /home/gitlab_ci_runner/data/
+
+# install gitlab-ci-runner
+sudo -u gitlab_ci_runner -H mkdir -p /home/gitlab_ci_runner/gitlab-ci-runner
+if [ -f /app/setup/gitlab-ci-runner-${GITLAB_CI_RUNNER_VERSION}.tar.gz ]; then
+  sudo -u gitlab_ci_runner -H tar -zvxf /app/setup/gitlab-ci-runner-${GITLAB_CI_RUNNER_VERSION}.tar.gz --strip=1 -C /home/gitlab_ci_runner/gitlab-ci-runner/
+else
+  wget "https://gitlab.com/gitlab-org/gitlab-ci-runner/repository/archive.tar.gz?ref=v${GITLAB_CI_RUNNER_VERSION}" -O - | tar -zxf - --strip=1 -C /home/gitlab_ci_runner/gitlab-ci-runner/
+  chown -R gitlab_ci_runner:gitlab_ci_runner /home/gitlab_ci_runner/gitlab-ci-runner/
+fi
+cd /home/gitlab_ci_runner/gitlab-ci-runner
+
+# install gems required by gitlab
+if [ -d "/app/setup/cache" ]; then
+  # offline gem installation
+  mv /app/setup/cache vendor/
+  chown -R gitlab_ci_runner:gitlab_ci_runner vendor/cache
+  sudo -u gitlab_ci_runner -H bundle install --local --path vendor/bundle
+else
+  # online gem installation
+  sudo -u gitlab_ci_runner -H bundle install --path vendor/bundle
+fi
+
+# make sure everything in /home/gitlab_ci_runner is owned by the gitlab_ci user
+chown -R gitlab_ci_runner:gitlab_ci_runner /home/gitlab_ci_runner/
+
+# install gitlab_ci_runner bootscript
+cp lib/support/init.d/gitlab_ci_runner /etc/init.d/gitlab_ci_runner
+chmod +x /etc/init.d/gitlab_ci_runner
+
+# create the /var/run/sshd directory (required for sshd to start)
+mkdir -p /var/run/sshd
+
+# setup log rotation for supervisord
+cat > /etc/logrotate.d/supervisord <<EOF
+/var/log/supervisor/*.log {
+    weekly
+    missingok
+    rotate 52
+    compress
+    delaycompress
+    notifempty
+    copytruncate
+}
+EOF
+
+# configure supervisord to start openssh server
+cat > /etc/supervisor/conf.d/openssh-server.conf <<EOF
+[program:openssh-server]
+priority=20
+directory=/tmp
+command=/usr/sbin/sshd -D
+user=root
+autostart=true
+autorestart=true
+stdout_logfile=/var/log/supervisor/%(program_name)s.log
+stderr_logfile=/var/log/supervisor/%(program_name)s.log
+EOF
+
+# configure supervisord to start cron
+cat > /etc/supervisor/conf.d/cron.conf <<EOF
+[program:cron]
+priority=20
+directory=/tmp
+command=/usr/sbin/cron -f
+user=root
+autostart=true
+autorestart=true
+stdout_logfile=/var/log/supervisor/%(program_name)s.log
+stderr_logfile=/var/log/supervisor/%(program_name)s.log
+EOF

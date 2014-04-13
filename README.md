@@ -45,7 +45,7 @@ Before you can start the GitLab CI Runner image you need to make sure you have a
 Before the image can be started, the runner should be registered on the GitLab CI server. This can be done by running the image with the **app:setup** command.
 
 ```bash
-docker run -name gitlab-ci-runner -i -t \
+docker run -name gitlab-ci-runner -i -t --rm \
   sameersbn/gitlab-ci-runner:latest app:setup
 ```
 

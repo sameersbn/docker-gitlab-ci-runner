@@ -36,7 +36,7 @@ Alternately you can build the image yourself.
 ```bash
 git clone https://github.com/sameersbn/docker-gitlab-ci-runner.git
 cd docker-gitlab-ci-runner
-docker build -t="$USER/gitlab-ci-runner" .
+docker build --tag="$USER/gitlab-ci-runner" .
 ```
 
 # Quick Start
@@ -45,14 +45,14 @@ Before you can start the GitLab CI Runner image you need to make sure you have a
 Before the image can be started, the runner should be registered on the GitLab CI server. This can be done by running the image with the **app:setup** command.
 
 ```bash
-docker run -name gitlab-ci-runner -i -t --rm \
+docker run --name gitlab-ci-runner -i -t --rm \
   sameersbn/gitlab-ci-runner:latest app:setup
 ```
 
 The command will prompt you to specify the location of the GitLab CI server and provide the registration token to access the server. After configuring the runner, the image can now be started.
 
 ```bash
-docker run -name gitlab-ci-runner -d sameersbn/gitlab-ci-runner:latest
+docker run --name gitlab-ci-runner -d sameersbn/gitlab-ci-runner:latest
 ```
 
 You should now have GitLab CI Runner up and running. Please read [Data Store](#data-store) section for deployment in production environments.
@@ -68,7 +68,7 @@ Volumes can be mounted in docker by specifying the **'-v'** option in the docker
 
 ```bash
 mkdir /opt/gitlab-ci-runner/data
-docker run -name gitlab-ci-runner -d -h gitlab-ci-runner.local.host \
+docker run --name gitlab-ci-runner -d -h gitlab-ci-runner.local.host \
   -v /opt/gitlab-ci-runner/data:/home/gitlab_ci_runner/data \
   sameersbn/gitlab-ci-runner:latest
 ```
@@ -105,7 +105,7 @@ docker pull sameersbn/gitlab-ci-runner:latest
 - **Step 4**: Start the image
 
 ```bash
-docker run -name gitlab-ci-runner -d [OPTIONS] sameersbn/gitlab-ci-runner:latest
+docker run --name gitlab-ci-runner -d [OPTIONS] sameersbn/gitlab-ci-runner:latest
 ```
 
 

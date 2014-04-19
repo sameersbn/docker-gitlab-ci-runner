@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 
 GITLAB_CI_RUNNER_VERSION=4.0.0
@@ -40,45 +39,3 @@ chown -R gitlab_ci_runner:gitlab_ci_runner /home/gitlab_ci_runner/
 # install gitlab_ci_runner bootscript
 cp lib/support/init.d/gitlab_ci_runner /etc/init.d/gitlab_ci_runner
 chmod +x /etc/init.d/gitlab_ci_runner
-
-# create the /var/run/sshd directory (required for sshd to start)
-mkdir -p /var/run/sshd
-
-# setup log rotation for supervisord
-cat > /etc/logrotate.d/supervisord <<EOF
-/var/log/supervisor/*.log {
-    weekly
-    missingok
-    rotate 52
-    compress
-    delaycompress
-    notifempty
-    copytruncate
-}
-EOF
-
-# configure supervisord to start openssh server
-cat > /etc/supervisor/conf.d/openssh-server.conf <<EOF
-[program:openssh-server]
-priority=20
-directory=/tmp
-command=/usr/sbin/sshd -D
-user=root
-autostart=true
-autorestart=true
-stdout_logfile=/var/log/supervisor/%(program_name)s.log
-stderr_logfile=/var/log/supervisor/%(program_name)s.log
-EOF
-
-# configure supervisord to start cron
-cat > /etc/supervisor/conf.d/cron.conf <<EOF
-[program:cron]
-priority=20
-directory=/tmp
-command=/usr/sbin/cron -f
-user=root
-autostart=true
-autorestart=true
-stdout_logfile=/var/log/supervisor/%(program_name)s.log
-stderr_logfile=/var/log/supervisor/%(program_name)s.log
-EOF

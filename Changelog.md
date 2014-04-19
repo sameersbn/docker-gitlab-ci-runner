@@ -1,6 +1,7 @@
 # Changelog
 
 **latest a.k.a. HEAD***
+- use sameersbn/ubuntu as the base docker image
 - install ruby2.0 via ppa
 
 **4.0.0**

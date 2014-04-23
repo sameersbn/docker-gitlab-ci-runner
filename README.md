@@ -1,18 +1,18 @@
 # Table of Contents
 - [Introduction](#introduction)
-    - [Version](#version)
-    - [Changelog](Changelog.md)
+	- [Version](#version)
+	- [Changelog](Changelog.md)
 - [Installation](#installation)
 - [Quick Start](#quick-start)
 - [Configuration](#configuration)
-    - [Data Store](#data-store)
+	- [Data Store](#data-store)
 - [Maintenance](#maintenance)
-    - [SSH Login](#ssh-login)
+	- [SSH Login](#ssh-login)
 - [Upgrading](#upgrading)
 - [References](#references)
 
 # Introduction
-Dockerfile to build a GitLab CI Runner container image.
+Dockerfile to build a GitLab CI Runner base image. You can use this as the base image to build your own runner images. The [sameersbn/runner-gitlab](https://github.com/sameersbn/docker-runner-gitlab) project demonstrates its use to build a CI image for GitLab CE.
 
 ## Version
 Current Version: 4.0.0
@@ -40,22 +40,24 @@ docker build --tag="$USER/gitlab-ci-runner" .
 ```
 
 # Quick Start
-Before you can start the GitLab CI Runner image you need to make sure you have a [GitLab CI](https://www.gitlab.com/gitlab-ci/) server running. Checkout the [docker-gitlab-ci](https://github.com/sameersbn/docker-gitlab-ci) project for getting a GitLab CI server up and running.
-
-Before the image can be started, the runner should be registered on the GitLab CI server. This can be done by running the image with the **app:setup** command.
+For a runner to do its trick, it has to first be registered/authorized on the GitLab CI server. This can be done by running the image with the **app:setup** command.
 
 ```bash
+mkdir -p /opt/gitlab-ci-runner
 docker run --name gitlab-ci-runner -i -t --rm \
+	-v /opt/gitlab-ci-runner:/home/gitlab_ci_runner/data \
   sameersbn/gitlab-ci-runner:latest app:setup
 ```
 
-The command will prompt you to specify the location of the GitLab CI server and provide the registration token to access the server. After configuring the runner, the image can now be started.
+The command will prompt you to specify the location of the GitLab CI server and provide the registration token to access the server. With this out of the way the image is ready, lets get is started.
 
 ```bash
-docker run --name gitlab-ci-runner -d sameersbn/gitlab-ci-runner:latest
+docker run --name gitlab-ci-runner -d \
+	-v /opt/gitlab-ci-runner:/home/gitlab_ci_runner/data \
+	sameersbn/gitlab-ci-runner:latest
 ```
 
-You should now have GitLab CI Runner up and running. Please read [Data Store](#data-store) section for deployment in production environments.
+You now have a basic runner up and running. But in this form its more or less useless. See [sameersbn/runner-gitlab](https://github.com/sameersbn/docker-runner-gitlab) to understand how you can use this base image to build a runner for your own projects.
 
 # Configuration
 
@@ -67,9 +69,9 @@ GitLab CI Runner saves the configuration for connection and access to the GitLab
 Volumes can be mounted in docker by specifying the **'-v'** option in the docker run command.
 
 ```bash
-mkdir /opt/gitlab-ci-runner/data
+mkdir /opt/gitlab-ci-runner
 docker run --name gitlab-ci-runner -d -h gitlab-ci-runner.local.host \
-  -v /opt/gitlab-ci-runner/data:/home/gitlab_ci_runner/data \
+  -v /opt/gitlab-ci-runner:/home/gitlab_ci_runner/data \
   sameersbn/gitlab-ci-runner:latest
 ```
 
@@ -88,26 +90,13 @@ This password is not persistent and changes every time the image is executed.
 
 ## Upgrading
 
-To upgrade to newer GitLab CI Runner releases, simply follow this 4 step upgrade procedure.
-
-- **Step 1**: Stop the currently running image
+To update the runner, simply stop the image and pull the latest version from the docker index.
 
 ```bash
 docker stop gitlab-ci-runner
-```
-
-- **Step 2**: Update the docker image.
-
-```bash
 docker pull sameersbn/gitlab-ci-runner:latest
-```
-
-- **Step 4**: Start the image
-
-```bash
 docker run --name gitlab-ci-runner -d [OPTIONS] sameersbn/gitlab-ci-runner:latest
 ```
-
 
 ## References
   * https://gitlab.com/gitlab-org/gitlab-ci-runner/blob/master/README.md

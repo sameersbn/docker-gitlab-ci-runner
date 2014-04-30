@@ -25,8 +25,8 @@ cd /home/gitlab_ci_runner/gitlab-ci-runner
 # install gems required by gitlab
 if [ -d "/app/setup/cache" ]; then
   # offline gem installation
-  mv /app/setup/cache vendor/
-  chown -R gitlab_ci_runner:gitlab_ci_runner vendor/cache
+  mkdir -p vendor && mv /app/setup/cache vendor/
+  chown -R gitlab_ci_runner:gitlab_ci_runner vendor/
   sudo -u gitlab_ci_runner -H bundle install --local --path vendor/bundle
 else
   # online gem installation

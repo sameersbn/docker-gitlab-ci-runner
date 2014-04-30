@@ -1,6 +1,7 @@
 # Changelog
 
 **latest**
+- added CA_CERTIFICATES_PATH configuration option
 - use sameersbn/ubuntu as the base docker image
 - install ruby2.0 via ppa
 

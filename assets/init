@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+CA_CERTIFICATES_PATH=${CA_CERTIFICATES_PATH:-/home/gitlab_ci_runner/data/certs/ca.crt}
+
 # generate a password for root.
 ROOT_PASSWORD=$(pwgen -c -n -1 12)
 echo "root:$ROOT_PASSWORD" | chpasswd
@@ -21,6 +23,10 @@ chmod 600 /home/gitlab_ci_runner/data/.ssh/authorized_keys
 chown -R gitlab_ci_runner:gitlab_ci_runner /home/gitlab_ci_runner/data/.ssh
 
 cd /home/gitlab_ci_runner/gitlab-ci-runner/
+
+echo "Updating CA certificates..."
+[ -f "${CA_CERTIFICATES_PATH}" ] && cp "${CA_CERTIFICATES_PATH}" /usr/local/share/ca-certificates/ca.crt
+update-ca-certificates --fresh >/dev/null 2>&1
 
 appStart () {
 	echo "Starting gitlab-ci-runner..."

@@ -9,7 +9,7 @@ echo "root:$ROOT_PASSWORD" | chpasswd
 echo User: root Password: $ROOT_PASSWORD
 
 # start supervisord
-/usr/bin/supervisord
+/usr/bin/supervisord -c /etc/supervisor/supervisord.conf
 supervisorctl start sshd
 
 # take ownership of /home/git/data

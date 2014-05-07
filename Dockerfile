@@ -1,7 +1,7 @@
-FROM sameersbn/ubuntu:12.04.20140418
+FROM sameersbn/ubuntu:14.04.20140508
 MAINTAINER sameer@damagehead.com
 
-RUN apt-get install -y python-software-properties && \
+RUN apt-get install -y software-properties-common && \
 		add-apt-repository -y ppa:git-core/ppa && \
 		add-apt-repository -y ppa:brightbox/ruby-ng && \
 		apt-get update && \
@@ -9,9 +9,9 @@ RUN apt-get install -y python-software-properties && \
 			git-core zlib1g-dev libyaml-dev libssl-dev \
 			libgdbm-dev libreadline-dev libncurses5-dev libffi-dev \
 			libxml2-dev libxslt-dev libcurl4-openssl-dev libicu-dev \
-			ruby2.0 ruby-switch ruby2.0-dev && \
-		ruby-switch --set ruby2.0 && gem install --no-ri --no-rdoc bundler && \
-		apt-get clean # 20140418
+			ruby2.1 ruby2.1-dev && \
+		gem install --no-ri --no-rdoc bundler && \
+		apt-get clean # 20140508
 
 ADD assets/setup/ /app/setup/
 RUN chmod 755 /app/setup/install

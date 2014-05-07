@@ -1,6 +1,7 @@
 # Changelog
 
-**latest**
+**5.0.0**
+- upgrade to gitlab-ci-runner 5.0.0
 - upgrade to sameersbn/ubuntu:14.04.20140505 base image
 - added CA_CERTIFICATES_PATH configuration option
 - use sameersbn/ubuntu as the base docker image

@@ -16,7 +16,7 @@
 Dockerfile to build a GitLab CI Runner base image. You can use this as the base image to build your own runner images. The [sameersbn/runner-gitlab](https://github.com/sameersbn/docker-runner-gitlab) project demonstrates its use to build a CI image for GitLab CE.
 
 ## Version
-Current Version: 4.0.0
+Current Version: 5.0.0
 
 # Installation
 
@@ -26,10 +26,10 @@ Pull the latest version of the image from the docker index. This is the recommen
 docker pull sameersbn/gitlab-ci-runner:latest
 ```
 
-Starting from GitLab CI Runner version 4.0.0, You can pull a particular version of GitLab CI Runner by specifying the version number. For example,
+Starting from GitLab CI Runner version 5.0.0, You can pull a particular version of GitLab CI Runner by specifying the version number. For example,
 
 ```bash
-docker pull sameersbn/gitlab-ci-runner:4.0.0
+docker pull sameersbn/gitlab-ci-runner:5.0.0
 ```
 
 Alternately you can build the image yourself.

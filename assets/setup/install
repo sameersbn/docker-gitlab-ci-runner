@@ -22,16 +22,12 @@ else
 fi
 cd /home/gitlab_ci_runner/gitlab-ci-runner
 
-# install gems required by gitlab
+# install gems required by gitlab-ci-runner, use cache if available
 if [ -d "/app/setup/cache" ]; then
-  # offline gem installation
   mkdir -p vendor && mv /app/setup/cache vendor/
   chown -R gitlab_ci_runner:gitlab_ci_runner vendor/
-  sudo -u gitlab_ci_runner -H bundle install --local --path vendor/bundle
-else
-  # online gem installation
-  sudo -u gitlab_ci_runner -H bundle install --path vendor/bundle
 fi
+sudo -u gitlab_ci_runner -H bundle install --path vendor/bundle
 
 # make sure everything in /home/gitlab_ci_runner is owned by the gitlab_ci user
 chown -R gitlab_ci_runner:gitlab_ci_runner /home/gitlab_ci_runner/

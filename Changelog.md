@@ -1,6 +1,7 @@
 # Changelog
 
 **latest**
+- update to sameersbn/ubuntu:14.04.20140628 base image
 - removed sshd start, use nsenter instead
 
 **5.0.0**

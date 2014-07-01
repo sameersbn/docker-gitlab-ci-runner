@@ -7,7 +7,6 @@
 - [Configuration](#configuration)
 	- [Data Store](#data-store)
 	- [Installing Trusted SSL Server Certificates](#installing-trusted-ssl-server-certificates)
-- [Maintenance](#maintenance)
 - [Upgrading](#upgrading)
 - [References](#references)
 
@@ -83,8 +82,6 @@ The default path the runner is configured to look for the trusted SSL certificat
 If you remember from above, the /home/gitlab_ci_runner/data path is the path of the [data store](#data-store), which means that we have to create a folder named certs inside /opt/gitlab-ci-runner/data/ and add the ca.crt file into it.
 
 The ca.crt file should contain the root certificates of all the servers you want to trust. With respect to GitLab, this will be the contents of the gitlab.crt file as described in the [README](https://github.com/sameersbn/docker-gitlab/blob/master/README.md#ssl) of the [docker-gitlab](https://github.com/sameersbn/docker-gitlab) container.
-
-# Maintenance
 
 ## Upgrading
 

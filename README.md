@@ -88,8 +88,8 @@ The ca.crt file should contain the root certificates of all the servers you want
 To update the runner, simply stop the image and pull the latest version from the docker index.
 
 ```bash
-docker stop gitlab-ci-runner
 docker pull sameersbn/gitlab-ci-runner:5.0.0
+docker stop gitlab-ci-runner
 docker run --name gitlab-ci-runner -d [OPTIONS] sameersbn/gitlab-ci-runner:5.0.0
 ```
 

@@ -19,8 +19,6 @@ RUN /app/setup/install
 ADD assets/init /app/init
 RUN chmod 755 /app/init
 
-ADD authorized_keys /root/.ssh/
-
 VOLUME ["/home/gitlab_ci_runner/data"]
 
 ENTRYPOINT ["/app/init"]

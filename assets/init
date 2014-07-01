@@ -10,7 +10,6 @@ echo User: root Password: $ROOT_PASSWORD
 
 # start supervisord
 /usr/bin/supervisord -c /etc/supervisor/supervisord.conf
-supervisorctl start sshd
 
 # take ownership of /home/git/data
 chown gitlab_ci_runner:gitlab_ci_runner /home/gitlab_ci_runner/data

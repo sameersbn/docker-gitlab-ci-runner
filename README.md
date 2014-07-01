@@ -8,7 +8,6 @@
 	- [Data Store](#data-store)
 	- [Installing Trusted SSL Server Certificates](#installing-trusted-ssl-server-certificates)
 - [Maintenance](#maintenance)
-	- [SSH Login](#ssh-login)
 - [Upgrading](#upgrading)
 - [References](#references)
 
@@ -86,17 +85,6 @@ If you remember from above, the /home/gitlab_ci_runner/data path is the path of 
 The ca.crt file should contain the root certificates of all the servers you want to trust. With respect to GitLab, this will be the contents of the gitlab.crt file as described in the [README](https://github.com/sameersbn/docker-gitlab/blob/master/README.md#ssl) of the [docker-gitlab](https://github.com/sameersbn/docker-gitlab) container.
 
 # Maintenance
-
-## SSH Login
-There are two methods to gain root login to the container, the first method is to add your public rsa key to the authorized_keys file and build the image.
-
-The second method is use the dynamically generated password. Every time the container is started a random password is generated using the pwgen tool and assigned to the root user. This password can be fetched from the docker logs.
-
-```bash
-docker logs gitlab-ci 2>&1 | grep '^User: ' | tail -n1
-```
-
-This password is not persistent and changes every time the image is executed.
 
 ## Upgrading
 

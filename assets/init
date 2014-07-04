@@ -25,7 +25,7 @@ appStart () {
 	echo "Starting gitlab-ci-runner..."
 
 	sudo -u gitlab_ci_runner -H ln -sf /home/gitlab_ci_runner/data/config.yml config.yml
-	bundle exec ./bin/runner
+	exec bundle exec ./bin/runner
 }
 
 appSetup () {

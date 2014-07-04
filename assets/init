@@ -3,9 +3,6 @@ set -e
 
 CA_CERTIFICATES_PATH=${CA_CERTIFICATES_PATH:-/home/gitlab_ci_runner/data/certs/ca.crt}
 
-# start supervisord
-/usr/bin/supervisord -c /etc/supervisor/supervisord.conf
-
 # take ownership of /home/git/data
 chown gitlab_ci_runner:gitlab_ci_runner /home/gitlab_ci_runner/data
 

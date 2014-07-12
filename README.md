@@ -43,7 +43,7 @@ For a runner to do its trick, it has to first be registered/authorized on the Gi
 
 ```bash
 mkdir -p /opt/gitlab-ci-runner
-docker run --name gitlab-ci-runner -i -t --rm \
+docker run --name gitlab-ci-runner -it --rm \
 	-v /opt/gitlab-ci-runner:/home/gitlab_ci_runner/data \
   sameersbn/gitlab-ci-runner:5.0.0 app:setup
 ```

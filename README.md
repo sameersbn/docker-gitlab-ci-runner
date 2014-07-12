@@ -90,6 +90,7 @@ To update the runner, simply stop the image and pull the latest version from the
 ```bash
 docker pull sameersbn/gitlab-ci-runner:5.0.0
 docker stop gitlab-ci-runner
+docker rm gitlab-ci-runner
 docker run --name gitlab-ci-runner -d [OPTIONS] sameersbn/gitlab-ci-runner:5.0.0
 ```
 

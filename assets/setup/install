@@ -12,14 +12,10 @@ sudo -u gitlab_ci_runner -H ln -s /home/gitlab_ci_runner/data/.ssh /home/gitlab_
 # create the data store
 sudo -u gitlab_ci_runner -H mkdir -p /home/gitlab_ci_runner/data/
 
-# install gitlab-ci-runner
-sudo -u gitlab_ci_runner -H mkdir -p /home/gitlab_ci_runner/gitlab-ci-runner
-if [ -f /app/setup/gitlab-ci-runner-${GITLAB_CI_RUNNER_VERSION}.tar.gz ]; then
-  sudo -u gitlab_ci_runner -H tar -zvxf /app/setup/gitlab-ci-runner-${GITLAB_CI_RUNNER_VERSION}.tar.gz --strip=1 -C /home/gitlab_ci_runner/gitlab-ci-runner/
-else
-  wget "https://gitlab.com/gitlab-org/gitlab-ci-runner/repository/archive.tar.gz?ref=v${GITLAB_CI_RUNNER_VERSION}" -O - | tar -zxf - --strip=1 -C /home/gitlab_ci_runner/gitlab-ci-runner/
-  chown -R gitlab_ci_runner:gitlab_ci_runner /home/gitlab_ci_runner/gitlab-ci-runner/
-fi
+# shallow clone gitlab-ci-runner
+sudo -u gitlab_ci_runner -H git clone -b v${GITLAB_CI_RUNNER_VERSION} --depth 1 \
+	https://github.com/gitlabhq/gitlab-ci-runner.git /home/gitlab_ci_runner/gitlab-ci-runner
+
 cd /home/gitlab_ci_runner/gitlab-ci-runner
 
 # install gems required by gitlab-ci-runner, use cache if available

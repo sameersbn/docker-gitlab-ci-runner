@@ -1,6 +1,7 @@
 # Changelog
 
 **latest**
+- shallow clone gitlab-ci-runner
 - update to sameersbn/ubuntu:14.04.20140628 base image
 - removed sshd start, use nsenter instead
 

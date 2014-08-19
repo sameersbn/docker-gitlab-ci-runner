@@ -1,6 +1,7 @@
 # Changelog
 
 **latest**
+- update to the sameersbn/ubuntu:12.04.20140818 baseimage
 - update to the sameersbn/ubuntu:12.04.20140812 baseimage
 - shallow clone gitlab-ci-runner
 - update to sameersbn/ubuntu:14.04.20140628 base image

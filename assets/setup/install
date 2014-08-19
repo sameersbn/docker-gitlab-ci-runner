@@ -14,7 +14,7 @@ sudo -u gitlab_ci_runner -H mkdir -p /home/gitlab_ci_runner/data/
 
 # shallow clone gitlab-ci-runner
 sudo -u gitlab_ci_runner -H git clone -b v${GITLAB_CI_RUNNER_VERSION} --depth 1 \
-	https://github.com/gitlabhq/gitlab-ci-runner.git /home/gitlab_ci_runner/gitlab-ci-runner
+  https://github.com/gitlabhq/gitlab-ci-runner.git /home/gitlab_ci_runner/gitlab-ci-runner
 
 cd /home/gitlab_ci_runner/gitlab-ci-runner
 

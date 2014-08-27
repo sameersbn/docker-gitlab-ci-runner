@@ -3,24 +3,29 @@ set -e
 
 GITLAB_CI_RUNNER_VERSION=5.0.0
 
+INSTALL_DIR="/home/gitlab_ci_runner/gitlab-ci-runner"
+DATA_DIR="/home/gitlab_ci_runner/data"
+SETUP_DIR="/app/setup"
+GEM_CACHE_DIR="${SETUP_DIR}/cache"
+
 # add git user
 adduser --disabled-login --gecos 'GitLab CI Runner' gitlab_ci_runner
 
-sudo -u gitlab_ci_runner -H mkdir -p /home/gitlab_ci_runner/data/.ssh
-sudo -u gitlab_ci_runner -H ln -s /home/gitlab_ci_runner/data/.ssh /home/gitlab_ci_runner/.ssh
+sudo -u gitlab_ci_runner -H mkdir -p ${DATA_DIR}/.ssh
+sudo -u gitlab_ci_runner -H ln -s ${DATA_DIR}/.ssh /home/gitlab_ci_runner/.ssh
 
 # create the data store
-sudo -u gitlab_ci_runner -H mkdir -p /home/gitlab_ci_runner/data/
+sudo -u gitlab_ci_runner -H mkdir -p ${DATA_DIR}/
 
 # shallow clone gitlab-ci-runner
 sudo -u gitlab_ci_runner -H git clone -b v${GITLAB_CI_RUNNER_VERSION} --depth 1 \
-  https://github.com/gitlabhq/gitlab-ci-runner.git /home/gitlab_ci_runner/gitlab-ci-runner
+  https://github.com/gitlabhq/gitlab-ci-runner.git ${INSTALL_DIR}
 
-cd /home/gitlab_ci_runner/gitlab-ci-runner
+cd ${INSTALL_DIR}
 
 # install gems required by gitlab-ci-runner, use cache if available
-if [ -d "/app/setup/cache" ]; then
-  mkdir -p vendor && mv /app/setup/cache vendor/
+if [ -d "${GEM_CACHE_DIR}" ]; then
+  mkdir -p vendor && mv ${GEM_CACHE_DIR} vendor/
   chown -R gitlab_ci_runner:gitlab_ci_runner vendor/
 fi
 sudo -u gitlab_ci_runner -H bundle install --path vendor/bundle

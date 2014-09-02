@@ -8,7 +8,7 @@ RUN add-apt-repository -y ppa:git-core/ppa && \
       git-core zlib1g-dev libyaml-dev libssl-dev \
       libgdbm-dev libreadline-dev libncurses5-dev libffi-dev \
       libxml2-dev libxslt-dev libcurl4-openssl-dev libicu-dev \
-      ruby2.1 ruby2.1-dev && \
+      ruby2.1 ruby2.1-dev openssh-client && \
     gem install --no-ri --no-rdoc bundler && \
     rm -rf /var/lib/apt/lists/* # 20140818
 

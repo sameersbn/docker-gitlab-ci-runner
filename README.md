@@ -7,6 +7,7 @@
 - [Configuration](#configuration)
 	- [Data Store](#data-store)
 	- [Installing Trusted SSL Server Certificates](#installing-trusted-ssl-server-certificates)
+- [Deploy Keys](#deploy-keys)
 - [Upgrading](#upgrading)
 - [References](#references)
 
@@ -87,6 +88,14 @@ The default path the runner is configured to look for the trusted SSL certificat
 If you remember from above, the `/home/gitlab_ci_runner/data` is the path of the [data store](#data-store), which means that we have to create a folder named `certs` inside `/opt/gitlab-ci-runner/data/` and copy the `ca.crt` file into it.
 
 The `ca.crt` file should contain the root certificates of all the servers you want to trust. With respect to GitLab, this will be the contents of the `gitlab.crt` file as described in the [README](https://github.com/sameersbn/docker-gitlab/blob/master/README.md#ssl) of the [docker-gitlab](https://github.com/sameersbn/docker-gitlab) container.
+
+# Deploy Keys
+
+The image automatically generates a deploy keys for the `root` user and these keys are available at the data volume at `/home/gitlab_ci_runner/data/.ssh`. You can overwrite these keys if you wish to do so.
+
+If the runner needs to access a private git repo then add the generated public key to your projects deploy keys so that the runner can clone the required repos.
+
+*NOTE: The deploy keys are generated without a passphrase.*
 
 ## Upgrading
 

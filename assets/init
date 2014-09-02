@@ -9,13 +9,6 @@ CA_CERTIFICATES_PATH=${CA_CERTIFICATES_PATH:-$DATA_DIR/certs/ca.crt}
 # take ownership of /home/git/data
 chown gitlab_ci_runner:gitlab_ci_runner ${DATA_DIR}
 
-# create the .ssh directory
-sudo -u gitlab_ci_runner -H mkdir -p ${DATA_DIR}/.ssh/
-touch ${DATA_DIR}/.ssh/authorized_keys
-chmod 700 ${DATA_DIR}/.ssh
-chmod 600 ${DATA_DIR}/.ssh/authorized_keys
-chown -R gitlab_ci_runner:gitlab_ci_runner ${DATA_DIR}/.ssh
-
 cd ${INSTALL_DIR}
 
 if [ -f "${CA_CERTIFICATES_PATH}" ]; then

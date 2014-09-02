@@ -97,7 +97,7 @@ If the runner needs to access a private git repo then add the generated public k
 
 *NOTE: The deploy keys are generated without a passphrase.*
 
-## Upgrading
+# Upgrading
 
 To update the runner, simply stop the image and pull the latest version from the docker index.
 
@@ -108,5 +108,5 @@ docker rm gitlab-ci-runner
 docker run --name gitlab-ci-runner -d [OPTIONS] sameersbn/gitlab-ci-runner:5.0.0
 ```
 
-## References
+# References
   * https://gitlab.com/gitlab-org/gitlab-ci-runner/blob/master/README.md

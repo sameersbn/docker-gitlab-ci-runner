@@ -1,6 +1,6 @@
 # Changelog
 
-**latest**
+**5.0.0-1**
 - Create deploy keys for root user
 - update to sameersbn/ubuntu:14.04.20140628 image
 - update to the sameersbn/ubuntu:12.04.20140818 baseimage

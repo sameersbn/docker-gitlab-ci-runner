@@ -4,7 +4,7 @@ MAINTAINER sameer@damagehead.com
 RUN add-apt-repository -y ppa:git-core/ppa && \
     add-apt-repository -y ppa:brightbox/ruby-ng && \
     apt-get update && \
-    apt-get install -y build-essential checkinstall \
+    apt-get install -y build-essential \
       git-core zlib1g-dev libyaml-dev libssl-dev \
       libgdbm-dev libreadline-dev libncurses5-dev libffi-dev \
       libxml2-dev libxslt-dev libcurl4-openssl-dev libicu-dev \

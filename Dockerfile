@@ -2,11 +2,10 @@ FROM sameersbn/debian:jessie.20140918
 MAINTAINER sameer@damagehead.com
 
 RUN apt-get update \
- && apt-get install -y gcc g++ patch make \
-      git-core libc6-dev zlib1g-dev libyaml-dev libssl-dev \
-      libgdbm-dev libreadline-dev libncurses5-dev libffi-dev \
-      libxml2-dev libxslt-dev libcurl4-openssl-dev libicu-dev \
-      ruby2.1 ruby2.1-dev rubygems openssh-client \
+ && apt-get install -y git-core openssh-client ruby rubygems \
+      zlib1g libyaml-0-2 libssl1.0.0 \
+      libgdbm3 libreadline6 libncurses5 libffi6 \
+      libxml2 libxslt1.1 libcurl3 libicu52 \
 && gem install --no-ri --no-rdoc bundler \
 && rm -rf /var/lib/apt/lists/* # 20140918
 

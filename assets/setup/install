@@ -22,12 +22,30 @@ sudo -u gitlab_ci_runner -H git clone -b v${GITLAB_CI_RUNNER_VERSION} --depth 1 
 
 cd ${INSTALL_DIR}
 
+# rebuild apt cache
+apt-get update
+
+# install build dependencies for gem installation
+apt-get install -y gcc g++ patch make \
+  libc6-dev ruby-dev zlib1g-dev libyaml-dev libssl-dev \
+  libgdbm-dev libreadline-dev libncurses5-dev libffi-dev \
+  libxml2-dev libxslt-dev libcurl4-openssl-dev libicu-dev
+
 # install gems required by gitlab-ci-runner, use cache if available
 if [ -d "${GEM_CACHE_DIR}" ]; then
   mkdir -p vendor && mv ${GEM_CACHE_DIR} vendor/
   chown -R gitlab_ci_runner:gitlab_ci_runner vendor/
 fi
 sudo -u gitlab_ci_runner -H bundle install --path vendor/bundle
+
+# purge build dependencies
+apt-get purge -y --auto-remove gcc g++ patch make \
+  libc6-dev ruby-dev zlib1g-dev libyaml-dev libssl-dev \
+  libgdbm-dev libreadline-dev libncurses5-dev libffi-dev \
+  libxml2-dev libxslt-dev libcurl4-openssl-dev libicu-dev
+
+# cleanup
+rm -rf /var/lib/apt/lists/*
 
 # make sure everything in /home/gitlab_ci_runner is owned by the gitlab_ci user
 chown -R gitlab_ci_runner:gitlab_ci_runner /home/gitlab_ci_runner/

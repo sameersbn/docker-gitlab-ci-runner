@@ -1,5 +1,8 @@
 # Changelog
 
+**latest**
+- rebase image on sameersbn/debian:jessie.20140918 base image
+
 **5.0.0-1**
 - Create deploy keys for root user
 - update to sameersbn/ubuntu:14.04.20140628 image

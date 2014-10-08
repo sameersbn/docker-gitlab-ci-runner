@@ -27,7 +27,7 @@ apt-get update
 
 # install build dependencies for gem installation
 apt-get install -y gcc g++ patch make \
-  libc6-dev ruby-dev zlib1g-dev libyaml-dev libssl-dev \
+  libc6-dev ruby2.1-dev zlib1g-dev libyaml-dev libssl-dev \
   libgdbm-dev libreadline-dev libncurses5-dev libffi-dev \
   libxml2-dev libxslt-dev libcurl4-openssl-dev libicu-dev
 
@@ -40,7 +40,7 @@ sudo -u gitlab_ci_runner -H bundle install --path vendor/bundle
 
 # purge build dependencies
 apt-get purge -y --auto-remove gcc g++ patch make \
-  libc6-dev ruby-dev zlib1g-dev libyaml-dev libssl-dev \
+  libc6-dev ruby2.1-dev zlib1g-dev libyaml-dev libssl-dev \
   libgdbm-dev libreadline-dev libncurses5-dev libffi-dev \
   libxml2-dev libxslt-dev libcurl4-openssl-dev libicu-dev
 

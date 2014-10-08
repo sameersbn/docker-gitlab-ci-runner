@@ -38,6 +38,18 @@ if [ -d "${GEM_CACHE_DIR}" ]; then
 fi
 sudo -u gitlab_ci_runner -H bundle install --path vendor/bundle
 
+cat > /etc/supervisor/conf.d/runner.conf <<EOF
+[program:runner]
+priority=20
+directory=${INSTALL_DIR}
+command=/usr/local/bin/bundle exec ./bin/runner
+user=root
+autostart=true
+autorestart=true
+stdout_logfile=/var/log/supervisor/%(program_name)s.log
+stderr_logfile=/var/log/supervisor/%(program_name)s.log
+EOF
+
 # purge build dependencies
 apt-get purge -y --auto-remove gcc g++ patch make \
   libc6-dev ruby2.1-dev zlib1g-dev libyaml-dev libssl-dev \

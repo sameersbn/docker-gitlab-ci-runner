@@ -44,7 +44,7 @@ appStart () {
   fi
 
   sudo -u gitlab_ci_runner -H ln -sf ${DATA_DIR}/config.yml config.yml
-  exec bundle exec ./bin/runner
+  exec /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf
 }
 
 appSetup () {

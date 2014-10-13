@@ -39,6 +39,7 @@ appStart () {
     else
       echo "WARNING: No configuration found!"
       echo "Please run app:setup or set CI_SERVER_URL and REGISTRATION_TOKEN."
+      exit 1
     fi
   fi
 

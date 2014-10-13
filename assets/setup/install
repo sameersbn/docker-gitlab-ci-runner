@@ -37,6 +37,10 @@ sudo -u gitlab_ci_runner -H bundle install --path vendor/bundle
 
 sudo -u gitlab_ci_runner -H mkdir -m 0755 -p ${INSTALL_DIR}/tmp/pids
 
+# create symlink to builds directory
+rm -rf tmp/builds
+ln -sf ${DATA_DIR}/builds tmp/builds
+
 touch /var/log/gitlab_ci_runner.log
 chown gitlab_ci_runner:gitlab_ci_runner /var/log/gitlab_ci_runner.log
 

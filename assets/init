@@ -10,6 +10,9 @@ CA_CERTIFICATES_PATH=${CA_CERTIFICATES_PATH:-$DATA_DIR/certs/ca.crt}
 # take ownership of /home/git/data
 chown -R gitlab_ci_runner:gitlab_ci_runner ${DATA_DIR}
 
+# create the builds directory
+sudo -u gitlab_ci_runner -H mkdir -p ${DATA_DIR}/builds/
+
 # create the .ssh directory
 sudo -u gitlab_ci_runner -H mkdir -p ${DATA_DIR}/.ssh/
 

@@ -42,7 +42,7 @@ chown gitlab_ci_runner:gitlab_ci_runner /var/log/gitlab_ci_runner.log
 
 cat > /etc/supervisor/conf.d/runner.conf <<EOF
 [program:runner]
-numprocs={{CI_RUNNERS_COUNT}}
+numprocs=1
 process_name=%(program_name)s_%(process_num)02d
 priority=20
 directory=${INSTALL_DIR}

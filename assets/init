@@ -27,7 +27,7 @@ chmod 700 ${DATA_DIR}/.ssh
 cd ${INSTALL_DIR}
 
 # configure number of runner instances
-sed 's/{{CI_RUNNERS_COUNT}}/'"${CI_RUNNERS_COUNT}"'/' -i /etc/supervisor/conf.d/runner.conf
+sed 's/^numprocs=1/numprocs='"${CI_RUNNERS_COUNT}"'/' -i /etc/supervisor/conf.d/runner.conf
 
 if [ -f "${CA_CERTIFICATES_PATH}" ]; then
   echo "Updating CA certificates..."

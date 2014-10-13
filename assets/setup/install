@@ -35,7 +35,8 @@ if [ -d "${GEM_CACHE_DIR}" ]; then
 fi
 sudo -u gitlab_ci_runner -H bundle install --path vendor/bundle
 
-sudo -u gitlab_ci_runner -H mkdir -m 0755 -p ${INSTALL_DIR}/tmp/pids
+# create tmp/pids directory
+sudo -u gitlab_ci_runner -H mkdir -m 0755 -p tmp/pids
 
 # create symlink to builds directory
 rm -rf tmp/builds

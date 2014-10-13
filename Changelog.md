@@ -1,6 +1,7 @@
 # Changelog
 
 **latest**
+- start runner as gitlab_ci_runner user
 - purge development packages after install. shaves off ~150MB from the image.
 - rebase image on sameersbn/debian:jessie.20140918 base image
 

@@ -91,7 +91,7 @@ The `ca.crt` file should contain the root certificates of all the servers you wa
 
 # Deploy Keys
 
-The image automatically generates a deploy keys for the `root` user and these keys are available at the data volume at `/home/gitlab_ci_runner/data/.ssh`. You can overwrite these keys if you wish to do so.
+The image automatically generates a deploy keys for the `gitlab_ci_runner` user and these keys are available at the data volume at `/home/gitlab_ci_runner/data/.ssh`. You can overwrite these keys if you wish to do so.
 
 If the runner needs to access a private git repo then add the generated public key to your projects deploy keys so that the runner can clone the required repos.
 

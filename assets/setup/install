@@ -11,10 +11,7 @@ GEM_CACHE_DIR="${SETUP_DIR}/cache"
 # add git user
 adduser --disabled-login --gecos 'GitLab CI Runner' gitlab_ci_runner
 
-ln -s ${DATA_DIR}/.ssh /root/.ssh
-
-# create the data store
-sudo -u gitlab_ci_runner -H mkdir -p ${DATA_DIR}/
+ln -s ${DATA_DIR}/.ssh /home/gitlab_ci_runner/.ssh
 
 # shallow clone gitlab-ci-runner
 sudo -u gitlab_ci_runner -H git clone -b v${GITLAB_CI_RUNNER_VERSION} --depth 1 \
@@ -38,12 +35,18 @@ if [ -d "${GEM_CACHE_DIR}" ]; then
 fi
 sudo -u gitlab_ci_runner -H bundle install --path vendor/bundle
 
+sudo -u gitlab_ci_runner -H mkdir -m 0755 -p ${INSTALL_DIR}/tmp/pids
+
+touch /var/log/gitlab_ci_runner.log
+chown gitlab_ci_runner:gitlab_ci_runner /var/log/gitlab_ci_runner.log
+
 cat > /etc/supervisor/conf.d/runner.conf <<EOF
 [program:runner]
 priority=20
 directory=${INSTALL_DIR}
+environment=HOME=/home/gitlab_ci_runner
 command=/usr/local/bin/bundle exec ./bin/runner
-user=root
+user=gitlab_ci_runner
 autostart=true
 autorestart=true
 stopsignal=USR2

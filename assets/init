@@ -7,22 +7,21 @@ DATA_DIR="/home/gitlab_ci_runner/data"
 CA_CERTIFICATES_PATH=${CA_CERTIFICATES_PATH:-$DATA_DIR/certs/ca.crt}
 
 # take ownership of /home/git/data
-chown gitlab_ci_runner:gitlab_ci_runner ${DATA_DIR}
+chown -R gitlab_ci_runner:gitlab_ci_runner ${DATA_DIR}
 
 # create the .ssh directory
-mkdir -p ${DATA_DIR}/.ssh/
+sudo -u gitlab_ci_runner -H mkdir -p ${DATA_DIR}/.ssh/
 
 # generate deploy key
 if [ ! -e ${DATA_DIR}/.ssh/id_rsa -o ! -e ${DATA_DIR}/.ssh/id_rsa.pub ]; then
   echo "Generating SSH deploy keys..."
   rm -rf ${DATA_DIR}/.ssh/id_rsa ${DATA_DIR}/.ssh/id_rsa.pub
-  ssh-keygen -t rsa -N "" -f ${DATA_DIR}/.ssh/id_rsa
+  sudo -u gitlab_ci_runner -H ssh-keygen -t rsa -N "" -f ${DATA_DIR}/.ssh/id_rsa
 fi
 
 # make sure the ssh keys have the right ownership and permissions
 chmod 600 ${DATA_DIR}/.ssh/id_rsa ${DATA_DIR}/.ssh/id_rsa.pub
 chmod 700 ${DATA_DIR}/.ssh
-chown -R root:root ${DATA_DIR}/.ssh
 
 cd ${INSTALL_DIR}
 
@@ -42,6 +41,9 @@ appStart () {
       echo "Please run app:setup or set CI_SERVER_URL and REGISTRATION_TOKEN."
     fi
   fi
+
+  # remove  stale runners.pid if it exists
+  sudo -u gitlab_ci_runner -H rm -rf ${INSTALL_DIR}/tmp/pids/runners.pid
 
   sudo -u gitlab_ci_runner -H ln -sf ${DATA_DIR}/config.yml config.yml
   exec /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf

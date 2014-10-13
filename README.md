@@ -8,6 +8,7 @@
 	- [Data Store](#data-store)
 	- [Installing Trusted SSL Server Certificates](#installing-trusted-ssl-server-certificates)
 - [Deploy Keys](#deploy-keys)
+- [Configuration Parameters](#configuration-parameters)
 - [Upgrading](#upgrading)
 - [References](#references)
 
@@ -96,6 +97,16 @@ The image automatically generates a deploy keys for the `gitlab_ci_runner` user 
 If the runner needs to access a private git repo then add the generated public key to your projects deploy keys so that the runner can clone the required repos.
 
 *NOTE: The deploy keys are generated without a passphrase.*
+
+# Configuration Parameters
+
+*Please refer the docker run command options for the `--env-file` flag where you can specify all required environment variables in a single file. This will save you from writing a potentially long docker run command.*
+
+Below is the list of available options that you can use to configure your runner.
+
+- **CI_SERVER_URL**: The hostname of the GitLab CI server. No defaults
+- **REGISTRATION_TOKEN**: The token to use to register on the CI server
+*The above two options are only applicable if you want to skip the `app:setup` step and want to instead provide these parameters at launch. Additionally, they are effective only the first time you launch the container*
 
 # Upgrading
 

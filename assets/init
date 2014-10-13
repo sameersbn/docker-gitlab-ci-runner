@@ -7,8 +7,9 @@ DATA_DIR="/home/gitlab_ci_runner/data"
 CI_RUNNERS_COUNT=${CI_RUNNERS_COUNT:-1}
 CA_CERTIFICATES_PATH=${CA_CERTIFICATES_PATH:-$DATA_DIR/certs/ca.crt}
 
-# take ownership of /home/git/data
-chown -R gitlab_ci_runner:gitlab_ci_runner ${DATA_DIR}
+# create and take ownership of ${DATA_DIR}
+mkdir -p ${DATA_DIR}
+chown gitlab_ci_runner:gitlab_ci_runner ${DATA_DIR}
 
 # create the builds directory
 sudo -u gitlab_ci_runner -H mkdir -p ${DATA_DIR}/builds/

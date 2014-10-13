@@ -26,6 +26,7 @@ fi
 # make sure the ssh keys have the right ownership and permissions
 chmod 600 ${DATA_DIR}/.ssh/id_rsa ${DATA_DIR}/.ssh/id_rsa.pub
 chmod 700 ${DATA_DIR}/.ssh
+chown -R gitlab_ci_runner:gitlab_ci_runner ${DATA_DIR}/.ssh/
 
 cd ${INSTALL_DIR}
 

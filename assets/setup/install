@@ -46,6 +46,7 @@ command=/usr/local/bin/bundle exec ./bin/runner
 user=root
 autostart=true
 autorestart=true
+stopsignal=USR2
 stdout_logfile=/var/log/supervisor/%(program_name)s.log
 stderr_logfile=/var/log/supervisor/%(program_name)s.log
 EOF

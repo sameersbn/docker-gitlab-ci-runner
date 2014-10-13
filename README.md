@@ -107,6 +107,7 @@ Below is the list of available options that you can use to configure your runner
 - **CI_SERVER_URL**: The hostname of the GitLab CI server. No defaults
 - **REGISTRATION_TOKEN**: The token to use to register on the CI server
 *The above two options are only applicable if you want to skip the `app:setup` step and want to instead provide these parameters at launch. Additionally, they are effective only the first time you launch the container*
+- **CI_RUNNERS_COUNT**: Number of instances of the runner to start. Defaults to `1`. Increase this if you want the runner to process multiple builds simultaneouly.
 
 # Upgrading
 

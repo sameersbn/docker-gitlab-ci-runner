@@ -4,6 +4,7 @@ set -e
 INSTALL_DIR="/home/gitlab_ci_runner/gitlab-ci-runner"
 DATA_DIR="/home/gitlab_ci_runner/data"
 
+CI_RUNNERS_COUNT=${CI_RUNNERS_COUNT:-1}
 CA_CERTIFICATES_PATH=${CA_CERTIFICATES_PATH:-$DATA_DIR/certs/ca.crt}
 
 # take ownership of /home/git/data
@@ -24,6 +25,9 @@ chmod 600 ${DATA_DIR}/.ssh/id_rsa ${DATA_DIR}/.ssh/id_rsa.pub
 chmod 700 ${DATA_DIR}/.ssh
 
 cd ${INSTALL_DIR}
+
+# configure number of runner instances
+sed 's/{{CI_RUNNERS_COUNT}}/'"${CI_RUNNERS_COUNT}"'/' -i /etc/supervisor/conf.d/runner.conf
 
 if [ -f "${CA_CERTIFICATES_PATH}" ]; then
   echo "Updating CA certificates..."

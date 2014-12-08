@@ -42,14 +42,10 @@ fi
 
 appStart () {
   echo "Starting gitlab-ci-runner..."
+
+  # make sure the runner is configured
   if [ ! -e ${DATA_DIR}/config.yml ]; then
-    if [ -n "$CI_SERVER_URL" ] && [ -n "$REGISTRATION_TOKEN" ]; then
-      appSetup $CI_SERVER_URL $REGISTRATION_TOKEN
-    else
-      echo "WARNING: No configuration found!"
-      echo "Please run app:setup or set CI_SERVER_URL and REGISTRATION_TOKEN."
-      exit 1
-    fi
+    appSetup
   fi
 
   # remove  stale runners.pid if it exists
@@ -60,7 +56,11 @@ appStart () {
 }
 
 appSetup () {
-  sudo -u gitlab_ci_runner -H CI_SERVER_URL=$1 REGISTRATION_TOKEN=$2 bundle exec ./bin/setup
+  if [ -n "${CI_SERVER_URL}" -a -n "${REGISTRATION_TOKEN}" ]; then
+    sudo -u gitlab_ci_runner -H CI_SERVER_URL=${CI_SERVER_URL} REGISTRATION_TOKEN=${REGISTRATION_TOKEN} bundle exec ./bin/setup
+  else
+    sudo -u gitlab_ci_runner -H bundle exec ./bin/setup
+  fi
   sudo -u gitlab_ci_runner -H mv config.yml ${DATA_DIR}/config.yml
 }
 

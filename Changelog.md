@@ -5,6 +5,7 @@
 - start runner as gitlab_ci_runner user
 - purge development packages after install. shaves off ~150MB from the image.
 - rebase image on sameersbn/debian:jessie.20140918 base image
+- upgrade to sameersbn/ubuntu:14.04.20150120
 
 **5.0.0-1**
 - Create deploy keys for root user

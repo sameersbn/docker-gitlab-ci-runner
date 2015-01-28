@@ -1,6 +1,6 @@
 # Changelog
 
-**latest**
+**5.0.0-2**
 - added CI_RUNNERS_COUNT option to allow launching multiple runners
 - start runner as gitlab_ci_runner user
 - purge development packages after install. shaves off ~150MB from the image.

@@ -37,7 +37,7 @@ sed 's/^numprocs=1/numprocs='"${CI_RUNNERS_COUNT}"'/' -i /etc/supervisor/conf.d/
 if [ -f "${CA_CERTIFICATES_PATH}" ]; then
   echo "Updating CA certificates..."
   cp "${CA_CERTIFICATES_PATH}" /usr/local/share/ca-certificates/ca.crt
-  update-ca-certificates --fresh >/dev/null 2>&1
+  update-ca-certificates --fresh >/dev/null
 fi
 
 appStart () {

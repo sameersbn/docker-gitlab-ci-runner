@@ -1,4 +1,4 @@
-FROM sameersbn/ubuntu:14.04.20150220
+FROM sameersbn/ubuntu:14.04.20150323
 MAINTAINER sameer@damagehead.com
 
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv E1DF1F24 \
@@ -11,7 +11,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv E1DF1F24 \
       libgdbm3 libreadline6 libncurses5 libffi6 \
       libxml2 libxslt1.1 libcurl3 libicu52 \
 && gem install --no-document bundler \
-&& rm -rf /var/lib/apt/lists/* # 20150220
+&& rm -rf /var/lib/apt/lists/* # 20150323
 
 ADD assets/setup/ /app/setup/
 RUN chmod 755 /app/setup/install

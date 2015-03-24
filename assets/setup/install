@@ -33,7 +33,7 @@ if [ -d "${GEM_CACHE_DIR}" ]; then
   mkdir -p vendor && mv ${GEM_CACHE_DIR} vendor/
   chown -R gitlab_ci_runner:gitlab_ci_runner vendor/
 fi
-sudo -u gitlab_ci_runner -H bundle install --path vendor/bundle
+sudo -u gitlab_ci_runner -H bundle install -j$(nproc) --path vendor/bundle
 
 # create tmp/pids directory
 sudo -u gitlab_ci_runner -H mkdir -m 0755 -p tmp/pids

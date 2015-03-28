@@ -2,6 +2,7 @@
 
 **latest**
 - init: removed `CI_RUNNERS_COUNT` option, not recommended
+- gitlab-ci-runner: upgrade to v.5.2.1
 
 **5.0.0-2**
 - added CI_RUNNERS_COUNT option to allow launching multiple runners

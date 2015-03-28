@@ -21,7 +21,7 @@ Dockerfile to build a GitLab CI Runner base image. You can use this as the base 
 
 ## Version
 
-Current Version: **5.0.0-2**
+Current Version: **5.2.1**
 
 # Contributing
 
@@ -67,10 +67,10 @@ Pull the latest version of the image from the docker index. This is the recommen
 docker pull sameersbn/gitlab-ci-runner:latest
 ```
 
-Starting from GitLab CI Runner version `5.0.0-2`, You can pull a particular version of GitLab CI Runner by specifying the version number. For example,
+Starting from GitLab CI Runner version `5.2.1`, You can pull a particular version of GitLab CI Runner by specifying the version number. For example,
 
 ```bash
-docker pull sameersbn/gitlab-ci-runner:5.0.0-2
+docker pull sameersbn/gitlab-ci-runner:5.2.1
 ```
 
 Alternately you can build the image yourself.
@@ -89,7 +89,7 @@ For a runner to do its trick, it has to first be registered/authorized on the Gi
 mkdir -p /opt/gitlab-ci-runner
 docker run --name gitlab-ci-runner -it --rm \
 	-v /opt/gitlab-ci-runner:/home/gitlab_ci_runner/data \
-  sameersbn/gitlab-ci-runner:5.0.0-2 app:setup
+  sameersbn/gitlab-ci-runner:5.2.1 app:setup
 ```
 
 The command will prompt you to specify the location of the GitLab CI server and provide the registration token to access the server. With this out of the way the image is ready, lets get is started.
@@ -97,7 +97,7 @@ The command will prompt you to specify the location of the GitLab CI server and 
 ```bash
 docker run --name gitlab-ci-runner -it --rm \
 	-v /opt/gitlab-ci-runner:/home/gitlab_ci_runner/data \
-	sameersbn/gitlab-ci-runner:5.0.0-2
+	sameersbn/gitlab-ci-runner:5.2.1
 ```
 
 You now have a basic runner up and running. But in this form its more or less useless. See [sameersbn/runner-gitlab](https://github.com/sameersbn/docker-runner-gitlab) to understand how you can use this base image to build a runner for your own projects.
@@ -116,7 +116,7 @@ Volumes can be mounted in docker by specifying the **'-v'** option in the docker
 mkdir /opt/gitlab-ci-runner
 docker run --name gitlab-ci-runner -it --rm -h gitlab-ci-runner.local.host \
   -v /opt/gitlab-ci-runner:/home/gitlab_ci_runner/data \
-  sameersbn/gitlab-ci-runner:5.0.0-2
+  sameersbn/gitlab-ci-runner:5.2.1
 ```
 
 ## Installing Trusted SSL Server Certificates
@@ -178,10 +178,10 @@ For more information refer https://github.com/jpetazzo/nsenter
 To update the runner, simply stop the image and pull the latest version from the docker index.
 
 ```bash
-docker pull sameersbn/gitlab-ci-runner:5.0.0-2
+docker pull sameersbn/gitlab-ci-runner:5.2.1
 docker stop gitlab-ci-runner
 docker rm gitlab-ci-runner
-docker run --name gitlab-ci-runner -d [OPTIONS] sameersbn/gitlab-ci-runner:5.0.0-2
+docker run --name gitlab-ci-runner -d [OPTIONS] sameersbn/gitlab-ci-runner:5.2.1
 ```
 
 # References

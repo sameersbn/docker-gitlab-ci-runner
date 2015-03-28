@@ -1,6 +1,6 @@
 # Changelog
 
-**latest**
+**5.2.1**
 - init: removed `CI_RUNNERS_COUNT` option, not recommended
 - gitlab-ci-runner: upgrade to v.5.2.1
 

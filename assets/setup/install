@@ -3,15 +3,16 @@ set -e
 
 GITLAB_CI_RUNNER_VERSION=5.2.1
 
-INSTALL_DIR="/home/gitlab_ci_runner/gitlab-ci-runner"
-DATA_DIR="/home/gitlab_ci_runner/data"
+HOME_DIR="/home/gitlab_ci_runner"
+INSTALL_DIR="${HOME_DIR}/gitlab-ci-runner"
+DATA_DIR="${HOME_DIR}/data"
 SETUP_DIR="/app/setup"
 GEM_CACHE_DIR="${SETUP_DIR}/cache"
 
 # add git user
 adduser --disabled-login --gecos 'GitLab CI Runner' gitlab_ci_runner
 
-ln -s ${DATA_DIR}/.ssh /home/gitlab_ci_runner/.ssh
+ln -s ${DATA_DIR}/.ssh ${HOME_DIR}/.ssh
 
 # shallow clone gitlab-ci-runner
 sudo -u gitlab_ci_runner -H git clone -b v${GITLAB_CI_RUNNER_VERSION} --depth 1 \
@@ -49,7 +50,7 @@ cat > /etc/supervisor/conf.d/runner.conf <<EOF
 [program:runner]
 priority=20
 directory=${INSTALL_DIR}
-environment=HOME=/home/gitlab_ci_runner
+environment=HOME=${HOME_DIR}
 command=/usr/local/bin/bundle exec ./bin/runner
 user=gitlab_ci_runner
 autostart=true
@@ -68,8 +69,8 @@ apt-get purge -y --auto-remove gcc g++ patch make \
 # cleanup
 rm -rf /var/lib/apt/lists/*
 
-# make sure everything in /home/gitlab_ci_runner is owned by the gitlab_ci user
-chown -R gitlab_ci_runner:gitlab_ci_runner /home/gitlab_ci_runner/
+# make sure everything in ${HOME_DIR} is owned by the gitlab_ci user
+chown -R gitlab_ci_runner:gitlab_ci_runner ${HOME_DIR}/
 
 # install gitlab_ci_runner bootscript
 cp lib/support/init.d/gitlab_ci_runner /etc/init.d/gitlab_ci_runner

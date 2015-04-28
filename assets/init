@@ -1,8 +1,9 @@
 #!/bin/bash
 set -e
 
-INSTALL_DIR="/home/gitlab_ci_runner/gitlab-ci-runner"
-DATA_DIR="/home/gitlab_ci_runner/data"
+HOME_DIR="/home/gitlab_ci_runner"
+INSTALL_DIR="${HOME_DIR}/gitlab-ci-runner"
+DATA_DIR="${HOME_DIR}/data"
 
 CI_RUNNERS_COUNT=${CI_RUNNERS_COUNT:-1}
 CA_CERTIFICATES_PATH=${CA_CERTIFICATES_PATH:-$DATA_DIR/certs/ca.crt}

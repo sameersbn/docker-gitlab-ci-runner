@@ -1,3 +1,6 @@
+
+**NOTICE**: `gitlab-ci-runner` has been deprecated by GitLab in favour of the highly performant and feature rich [gitlab-ci-multi-runner](https://gitlab.com/gitlab-org/gitlab-ci-multi-runner). `gitlab-ci-multi-runner` is implemented in golang and has the ability to launch CI tests in docker containers.
+
 # Table of Contents
 - [Introduction](#introduction)
 	- [Version](#version)

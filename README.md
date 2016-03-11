@@ -46,7 +46,7 @@ Here is the shortform of the installation of an updated version of docker on ubu
 
 ```bash
 sudo apt-get purge docker.io
-curl -s https://get.docker.io/ubuntu/ | sudo sh
+curl -s https://get.docker.com/ | sudo sh
 sudo apt-get update
 sudo apt-get install lxc-docker
 ```
